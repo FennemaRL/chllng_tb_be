@@ -21,6 +21,8 @@ export default class FileServiceMapper{
         for(let index = 0; index < rowKeys.length; index++){
             objectToConstructFromRow[rowKeys[index]] = this.#parseValue(rowValues[index]);
         }
+        // here we remove the file name inside the object
+        delete objectToConstructFromRow["file"];
         return objectToConstructFromRow
     }
     
