@@ -7,14 +7,25 @@ export default class FileServiceMapper{
         for( let index = 1 ; index < splittedRows.length; index++){
             const row = splittedRows[index]
             const rowValues = row.split(',');
+            const numberIndex=2;
+            const hexIndex=3;
             const hasSameAmountOfValuesAndKeys = rowKeys.length === rowValues.length;
             const emptyValues = rowValues.some((value => "" ===value ));
-            if(hasSameAmountOfValuesAndKeys && ! emptyValues){
+            const isValidNumber = !Number.isNaN(Number(rowValues[numberIndex]))
+            const isValidHex = this.#validateHex(rowValues[hexIndex])
+            if(hasSameAmountOfValuesAndKeys && ! emptyValues && isValidNumber && isValidHex){
                 mappedToJsonRow.lines.push(this.#constructObjectFromCSV(rowKeys,rowValues))
             }
         }
         return mappedToJsonRow;
     }
+
+    static #validateHex(hexString) {
+        // Regular expression to match a 32-digit hexadecimal string
+        const hexRegex = /^[0-9a-fA-F]{32}$/;
+        return hexRegex.test(hexString);
+      }
+      
  
     static #constructObjectFromCSV(rowKeys,rowValues){
         const objectToConstructFromRow = {}
