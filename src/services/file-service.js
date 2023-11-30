@@ -1,16 +1,13 @@
-
-
-import axios from 'axios';
-import FileServiceMapper from './file-service-mapper.js'
-
 export default class FileService{
     #http;
     #url = 'https://echo-serv.tbxnet.com'
-    constructor() {
-        this.#http = axios.create();
+    #mapper;
+
+    constructor(httpinstance,mapper) {
+        this.#http = httpinstance;
         const token = "aSuperSecretKey";
         this.#http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
+        this.#mapper =mapper;
     }
     async getFiles() {
     const fileNameList = await this.#getFileNames();
@@ -26,7 +23,7 @@ export default class FileService{
 
     async #getFile(name) {
         const {data} = await this.#http.get (`${this.#url}/v1/secret/file/${name}`);
-        return FileServiceMapper.mapAndFilterRows(name,data);   
+        return this.#mapper.mapAndFilterRows(name,data);   
     }
     #filterEmptyFiles(fileList){
         return fileList.filter(fileObject => fileObject.lines.length >0);
