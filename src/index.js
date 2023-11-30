@@ -3,6 +3,11 @@ import FileService from './services/file-service.js'
 const app = express()
 const port = 3000
 
+app.use(function (req, res, next) {
+  res.header("Content-Type",'application/json');
+  next();
+});
+
 app.get('/files/data',async (req, res) => {
   const newFileService= new FileService();
   try{
