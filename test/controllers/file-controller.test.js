@@ -1,11 +1,10 @@
 import chai,{expect} from 'chai';
 import chaiHttp from 'chai-http';
-import {app} from '../../src/server.js'; //figure chai
+import {app} from '../../src/server.js'; 
 chai.use(chaiHttp);
 chai.should();
 describe("files", () => {
     describe("GET /data", () => {
-        // Test to get all students record
         it("should get all files record", (done) => {
              chai.request(app)
                  .get('/files/data')
