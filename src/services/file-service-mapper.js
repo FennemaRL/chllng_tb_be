@@ -30,15 +30,20 @@ export default class FileServiceMapper{
     static #constructObjectFromCSV(rowKeys,rowValues){
         const objectToConstructFromRow = {}
         for(let index = 0; index < rowKeys.length; index++){
-            objectToConstructFromRow[rowKeys[index]] = this.#parseValue(rowValues[index]);
+            objectToConstructFromRow[rowKeys[index]] = this.#parseValue(rowKeys[index],rowValues[index]);
         }
         // here we remove the file name inside the object
         delete objectToConstructFromRow["file"];
         return objectToConstructFromRow
     }
     
-    static #parseValue(string){
-        return string.replace(/\s/g, '')
+    static #parseValue(key,value){
+        if('number'===key ){
+            return Number(value)
+        }
+        else {
+            return value.replace(/\s/g, '')
+        }
     }
 
 }
