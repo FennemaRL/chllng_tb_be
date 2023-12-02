@@ -1,8 +1,10 @@
 import {default as express} from 'express';
 import {fileRoute} from './controllers/file-controller.js'
-const app = express()
-const port = 3000
+import {default as cors} from 'cors'
+const app = express();
+const port = 3000;
 
+app.use(cors());
 app.use(function (req, res, next) {
   res.header("Content-Type",'application/json');
   next();
