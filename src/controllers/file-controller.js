@@ -4,7 +4,9 @@ import FileService from '../services/file-service.js'
 import FileServiceMapper from '../services/file-service-mapper.js'
 import axios from 'axios';
 
-// middleware that is specific to this router
+/**
+ *  Handle the route of Files/data
+ */
 router.get('/data',async (req, res) => {
     const newFileService= new FileService(axios.create(),FileServiceMapper);
     try{
